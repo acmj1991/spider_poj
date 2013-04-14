@@ -7,7 +7,7 @@ import nyoj_ul as ul
 from pyquery import PyQuery as pq
 
 url = 'http://acm.nyist.net/JudgeOnline/rank.php?page='
-target = open('nyoj_userlist.txt','w')
+##target = open('nyoj_userlist.txt','w')
 
 def userlist_sp(pagenum):
     user_list = ['' for i in range(31)]

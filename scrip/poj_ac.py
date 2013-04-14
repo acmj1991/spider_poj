@@ -8,8 +8,6 @@ from pyquery import PyQuery as pq
 import re
 import thread as th
 
-
-
 ##根据用户名获取用户ac题数
 def poj_ac_maxtrix(user_name):
     url = 'http://poj.org/userstatus?user_id='
@@ -35,22 +33,21 @@ def poj_ac_maxtrix(user_name):
 
 ##获取用户名 通过用户名查询ac题目
 def poj_sp(start, size):
-    file_str = 'pojAC.txt';
-    file_pojac = open(file_str,'w')
-    for i in range(size):
-        [user_list,list_num] = ul.userlist_sp(start * size + i, size)
-        if(list_num == 0):
-            break
-        for j in range(list_num):
-            print (str(start * size + i + 1) + ' ' +str(j) + ' ' + user_list[j])
-            ans1 = str(start * size + i + 1) + ' ' +str(j) + ' ' + user_list[j] + '\n'
-            ans = poj_ac_maxtrix(user_list[j].encode('utf8'))
-            file_pojac.write(ans1)
+    file_str = '../data/pojAC' + str(start) + '.txt';
+    file_pojac = open(file_str,'w+')
+    [user_list,list_num] = ul.userlist_sp(start * size, size)
+    if(list_num == 0):
+        file_pojac.close
+        return
+    for j in range(list_num):
+        print str(start * size) + ' ' +str(j) + ' ' + user_list[j]
+        ans = poj_ac_maxtrix(user_list[j].encode('utf8'))
+        file_pojac.write(ans)
     file_pojac.close
 ##开多线程 400 * 100
-for i in range(100):
+for i in range(2):
     print '++++++++++++++++++' + str(i)
-    th.start_new_thread(poj_sp, (400, 100))
+    th.start_new_thread(poj_sp, (i, 3))
 print '----------------end'
 ##poj_sp(1, 3)
 ##th.start_new_thread(poj_sp(0, 3))
