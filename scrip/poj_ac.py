@@ -31,28 +31,26 @@ def poj_ac_maxtrix(user_name):
     ans = user_name + ' ' + str(j) + ans + '\n'
     return ans
 
+file_str = '../data/pojAC.txt';
+file_pojac = open(file_str,'w')
+
 ##获取用户名 通过用户名查询ac题目
 def poj_sp(start, size):
-    file_str = '../data/pojAC' + str(start) + '.txt';
-    file_pojac = open(file_str,'w+')
     [user_list,list_num] = ul.userlist_sp(start * size, size)
     if(list_num == 0):
-        file_pojac.close
+##        file_pojac.close
         return
     for j in range(list_num):
         print str(start * size) + ' ' +str(j) + ' ' + user_list[j]
         ans = poj_ac_maxtrix(user_list[j].encode('utf8'))
         file_pojac.write(ans)
-    file_pojac.close
 ##开多线程 400 * 100
-for i in range(2):
+pagesize = 1000
+for i in range(40):
     print '++++++++++++++++++' + str(i)
-    th.start_new_thread(poj_sp, (i, 3))
+    poj_sp(i, pagesize)
+##    th.start_new_thread(poj_sp, (i, 2000))
 print '----------------end'
 ##poj_sp(1, 3)
-##th.start_new_thread(poj_sp(0, 3))
-##th.start_new_thread(poj_sp(1, 3))
-##th.start_new_thread(poj_sp(2, 3))
-##th.start_new_thread(poj_sp(3, 3))
-##file_pojac.close()
+file_pojac.close()
 
